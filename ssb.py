@@ -266,7 +266,7 @@ def show_gpe_test():
     col_narration, col_map = st.columns([30, 70])
     
     with col_narration:
-        st.markdown("### 📋 Narration/Problem Statement")
+        st.markdown("### 📋 Narration")
         if not st.session_state.get('hide_narration', False):
             st.markdown(GPE_NARRATION)
         else:
@@ -331,6 +331,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
