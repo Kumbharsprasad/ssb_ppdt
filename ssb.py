@@ -17,7 +17,7 @@ TOTAL_PPDT_TIME = PPDT_VIEW_TIME + PPDT_WRITING_TIME
 
 # GPE Narration/Problem Statement
 GPE_NARRATION = """
-You are a group of Army Personals going for shooting practice from your camp at Malleswar to Mohi firing range in a 3 Ton. When you reached road junction, a few villagers with an injured person in a bullock cart stopped you and asked for help. The man who had been attacked by a Shark told you the incident. "I had been to the lighthouse Island for fishing and I overheard two smugglers discussing that a consignment of drugs was to reach the Island in a helicopter at 1100 hrs today. To divert the attention of the Coastal guard, they were planning to explode a bomb at the village school at 1130 hrs, where the coastal guard commander would be inaugurating the school's annual function. When they found out that I was listening, they tried to attack me, and I jumped into the sea and swam towards the shore. Unfortunately, a shark attacked me". At that time the NCO in charge tells you that he had forgotten to bring the targets for firing. The villagers further informed you that, the culvert had collapsed after they had passed through. Now time is 0930 hrs. As a group of brave young men, what will you do? Scale 2CM = 1 KM"""
+You are a group of Army Personals going for shooting practice from your camp at Malleswar to Mohi firing range in a 3 Ton. When you reached road junction, a few villagers with an injured person in a b[...]
 
 # --- HELPER FUNCTIONS ---
 
@@ -166,8 +166,8 @@ def show_ppdt_test():
                 image_path = get_ppdt_image_path(st.session_state.ppdt_set_number)
                 
                 try:
-                    # Use width parameter instead of use_container_width for older Streamlit versions
-                    st.image(image_path, caption=f"{st.session_state.ppdt_set}", width=None)
+                    # Use a valid width option so Streamlit doesn't raise "Invalid width value: None"
+                    st.image(image_path, caption=f"{st.session_state.ppdt_set}", width="stretch")
                 except FileNotFoundError:
                     st.error(f"⚠️ Picture not found at {image_path}")
                     st.info(f"Please ensure the file PPDT_{st.session_state.ppdt_set_number}.jpg exists in the 'ppdt' folder.")
@@ -264,7 +264,8 @@ def show_gpe_test():
         st.markdown("### 🗺️ GPE Map")
         if not st.session_state.hide_map:
             try:
-                st.image(GPE_MAP_PATH, caption="GPE Map (Study Area, Distances, and Resources)", width=None)
+                # Use a valid width option instead of None
+                st.image(GPE_MAP_PATH, caption="GPE Map (Study Area, Distances, and Resources)", width="stretch")
             except FileNotFoundError:
                 st.error(f"⚠️ Map image not found at {GPE_MAP_PATH}. Please check file path.")
         else:
