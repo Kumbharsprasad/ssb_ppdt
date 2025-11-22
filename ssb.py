@@ -89,9 +89,6 @@ def show_home_page():
         if st.button("🗺️ GPE (Group Planning Exercise)", use_container_width=True):
             st.session_state.page = 'gpe_instructions'
             
-    st.markdown("""
-    > **Note:** This is a mock-up. You must provide the actual images, maps, and sound files for full functionality.
-    """)
 
 # --- PPDT FUNCTIONS ---
 
@@ -334,5 +331,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
