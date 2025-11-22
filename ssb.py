@@ -75,7 +75,7 @@ GPE_INSTRUCTIONS = """
 # --- PAGE LAYOUT FUNCTIONS ---
 
 def show_home_page():
-    st.title("🪖🎖️⚔️ SSB Module App 48 MH Bn")
+    st.title("🪖🎖️⚔️ SSB Module App 48 MH Bn NCC")
     st.markdown("---")
     st.header("Please Select a Test")
     
@@ -334,4 +334,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
