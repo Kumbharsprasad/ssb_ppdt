@@ -17,7 +17,9 @@ TOTAL_PPDT_TIME = PPDT_VIEW_TIME + PPDT_WRITING_TIME
 
 # GPE Narration/Problem Statement
 GPE_NARRATION = """
-You are a group of Army Personals going for shooting practice from your camp at Malleswar to Mohi firing range in a 3 Ton. When you reached road junction, a few villagers with an injured person in a b[...]
+You are a group of Army Personals going for shooting practice from your camp at Malleswar to Mohi firing range in a 3 Ton. When you reached road junction, a few villagers with an injured person in a bus stop asked for help...
+(continue/replace with the actual narration text you want to use)
+"""
 
 # --- HELPER FUNCTIONS ---
 
@@ -165,14 +167,26 @@ def show_ppdt_test():
                 # Get the correct image path based on set number
                 image_path = get_ppdt_image_path(st.session_state.ppdt_set_number)
                 
-                try:
-                    # Use a valid width option so Streamlit doesn't raise "Invalid width value: None"
-                    st.image(image_path, caption=f"{st.session_state.ppdt_set}", width="stretch")
-                except FileNotFoundError:
+                if os.path.exists(image_path):
+                    try:
+                        # Provide a valid integer width so Streamlit accepts it.
+                        st.image(image_path, caption=f"{st.session_state.ppdt_set}", width=700)
+                    except Exception as e:
+                        st.error(f"⚠️ Error loading image: {str(e)}")
+                else:
                     st.error(f"⚠️ Picture not found at {image_path}")
-                    st.info(f"Please ensure the file PPDT_{st.session_state.ppdt_set_number}.jpg exists in the 'ppdt' folder.")
-                except Exception as e:
-                    st.error(f"⚠️ Error loading image: {str(e)}")
+                    st.info(f"Please ensure the file PPDT_{st.session_state.ppdt_set_number}.jpg exists in the '{PPDT_FOLDER_PATH}' folder.")
+                    # Helpful diagnostic: show what files are in the ppdt folder
+                    try:
+                        entries = os.listdir(PPDT_FOLDER_PATH)
+                        if entries:
+                            st.write("Files found in the ppdt folder:")
+                            for e in entries:
+                                st.write("-", e)
+                        else:
+                            st.write("The ppdt folder is empty.")
+                    except FileNotFoundError:
+                        st.write(f"The folder '{PPDT_FOLDER_PATH}' does not exist. Create it and put PPDT_1.jpg, PPDT_2.jpg, ... inside.")
         
         else:
             # Story Writing Phase - No text areas, just timer display
@@ -200,7 +214,7 @@ def show_ppdt_test():
             st.markdown(f"**Time Elapsed:** {format_time(elapsed_time)} / {format_time(TOTAL_PPDT_TIME)}")
             
             # Progress bar
-            progress = elapsed_time / TOTAL_PPDT_TIME
+            progress = min(1.0, elapsed_time / TOTAL_PPDT_TIME)
             st.progress(progress)
 
         # Rerun to update timer every second
@@ -255,18 +269,20 @@ def show_gpe_test():
     
     with col_narration:
         st.markdown("### 📋 Narration/Problem Statement")
-        if not st.session_state.hide_narration:
+        if not st.session_state.get('hide_narration', False):
             st.markdown(GPE_NARRATION)
         else:
             st.info("Narration is currently hidden.")
     
     with col_map:
         st.markdown("### 🗺️ GPE Map")
-        if not st.session_state.hide_map:
-            try:
-                # Use a valid width option instead of None
-                st.image(GPE_MAP_PATH, caption="GPE Map (Study Area, Distances, and Resources)", width="stretch")
-            except FileNotFoundError:
+        if not st.session_state.get('hide_map', False):
+            if os.path.exists(GPE_MAP_PATH):
+                try:
+                    st.image(GPE_MAP_PATH, caption="GPE Map (Study Area, Distances, and Resources)", width=700)
+                except Exception as e:
+                    st.error(f"⚠️ Error loading map image: {e}")
+            else:
                 st.error(f"⚠️ Map image not found at {GPE_MAP_PATH}. Please check file path.")
         else:
             st.info("Map is currently hidden.")
@@ -278,12 +294,12 @@ def show_gpe_test():
     
     with col1:
         if st.button("Toggle Map Visibility", use_container_width=True):
-            st.session_state.hide_map = not st.session_state.hide_map
+            st.session_state.hide_map = not st.session_state.get('hide_map', False)
             st.rerun()
     
     with col2:
         if st.button("Toggle Narration Visibility", use_container_width=True):
-            st.session_state.hide_narration = not st.session_state.hide_narration
+            st.session_state.hide_narration = not st.session_state.get('hide_narration', False)
             st.rerun()
     
     with col3:
