@@ -17,8 +17,9 @@ TOTAL_PPDT_TIME = PPDT_VIEW_TIME + PPDT_WRITING_TIME
 
 # GPE Narration/Problem Statement
 GPE_NARRATION = """
-You are a group of Army Personals going for shooting practice from your camp at Malleswar to Mohi firing range in a 3 Ton. When you reached road junction, a few villagers with an injured person in a bus stop asked for help...
-(continue/replace with the actual narration text you want to use)
+You are a group of Army Personals going for shooting practice from your camp at Malleswar to Mohi firing range in a 3 Ton. When you reached road junction, a few villagers with an injured person in a bullock cart stopped you and asked for help. The man who had been attacked by a Shark told you the incident. "I had been to the lighthouse Island for fishing and I overheard two smugglers discussing that a consignment of drugs was to reach the Island in a helicopter at 1100 hrs today. To divert the attention of the Coastal guard, they were planning to explode a bomb at the village school at 1130 hrs, where the coastal guard commander would be inaugurating the school's annual function. When they found out that I was listening, they tried to attack me, and I jumped into the sea and swam towards the shore. Unfortunately, a shark attacked me". At that time the NCO in charge tells you that he had forgotten to bring the targets for firing. 
+The villagers further informed you that, the culvert had collapsed after they had passed through. Now time is 0930 hrs. As a group of brave young men, what will you do?
+Scale 2CM = 1 KM
 """
 
 # --- HELPER FUNCTIONS ---
@@ -200,7 +201,7 @@ def show_ppdt_test():
             ### 📝 Write on Your Paper:
             
             1. **Character Details**: Number of characters, Sex, Age, and Mood
-               - Example: *3 characters; 2M, 1F; 25-30 years; Anxious*
+               - Example: *3 characters; 2M, 1F; 25-30 years; Posititve or Negative or Neutral*
             
             2. **Central Theme/Action**: What is happening in the picture?
             
@@ -333,3 +334,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
